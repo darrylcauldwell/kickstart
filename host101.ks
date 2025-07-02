@@ -4,7 +4,8 @@ vmaccepteula
 # Set the root password for the ESXi host
 rootpw VMware1!VMware1!
 
-# Install ESXi on the first disk, overwrite any existing VMFS, and ignore hardware warnings
+# Install ESXi on the first disk, overwrite any existing VMFS
+# the ignore hardware warnings is only necessary due to lab this was created in
 install --firstdisk --overwritevmfs --ignoreprereqwarnings
 
 # Configure the management network with a static IP, netmask, gateway, DNS, hostname, and specify the NIC
@@ -59,6 +60,7 @@ esxcli network ip interface ipv4 set --interface-name=vmk1 --ipv4=192.168.141.10
 esxcli network ip interface ipv4 set --interface-name=vmk2 --ipv4=192.168.142.101 --netmask=255.255.0.0 --type=static
 
 # Loop through all storage devices and mark them as SSD for vSAN ESA compatibility
+# marking disks as SSDs is only necessary due to the lab this was created in was nested
 for DEV in $(esxcli storage core device list | grep -E '^(naa\.|eui\.|mpx\.|t10\.)'); do
   echo "Marking device as SSD: $DEV" >> /var/log/firstboot-ssd.log
   esxcli storage hpp device set -d $DEV -M true
