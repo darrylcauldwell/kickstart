@@ -77,7 +77,7 @@ esxcli system syslog config set --loghost='tcp:vrli-l-01a.corp.internal:514'
 esxcli system maintenanceMode set -e true
 
 # Add UI message
-echo "I autoinstalled and pulled my configuration from GitHub!" > /etc/vmware/welcome
+esxcli system welcomemsg set -m="I autoinstalled and pulled my configuration from GitHub!"
 
 # Reboot the host after all initial configuration is complete
 esxcli system shutdown reboot -d 15 -r "Reboot after initial config"
